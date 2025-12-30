@@ -20,8 +20,9 @@ Features:
 - Role-based access control
     """,
     'author': 'Hunter BI',
+    'company': 'Hunter BI',
     'website': 'https://hunterbi.com',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': [
         'hr',
         'hr_attendance',
@@ -46,6 +47,9 @@ Features:
             'biotime_sync/static/src/xml/dashboard.xml',
         ],
     },
+    'images': ['static/description/icon.png'],
+    'price': 649,
+    'currency': 'EUR',
     'installable': True,
     'application': True,
     'auto_install': False,
