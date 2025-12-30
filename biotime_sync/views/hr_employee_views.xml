@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend hr.employee form view to add Biotime tab -->
+    <record id="view_employee_form_biotime" model="ir.ui.view">
+        <field name="name">hr.employee.form.biotime</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Biotime" name="biotime">
+                    <group>
+                        <group string="Biotime Integration">
+                            <field name="biotime_id"/>
+                            <field name="biotime_badge"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

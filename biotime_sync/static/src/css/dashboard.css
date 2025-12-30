@@ -1,0 +1,131 @@
+/* Biotime Dashboard Styles */
+
+.biotime_dashboard {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.biotime_dashboard .card {
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.biotime_dashboard .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.biotime_dashboard .display-4 {
+    font-weight: 600;
+}
+
+.biotime_dashboard .display-5 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.biotime_dashboard .progress {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.biotime_dashboard .progress-bar {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.biotime_dashboard .table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #6c757d;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.biotime_dashboard .table td {
+    vertical-align: middle;
+}
+
+.biotime_dashboard .badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+}
+
+.biotime_dashboard .list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.biotime_dashboard .list-group-item:first-child {
+    border-top: none;
+}
+
+.biotime_dashboard .btn-group .btn {
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.biotime_dashboard .card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.25rem;
+}
+
+.biotime_dashboard .card-header h5 {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Status colors */
+.biotime_dashboard .bg-success {
+    background-color: #28a745 !important;
+}
+
+.biotime_dashboard .bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.biotime_dashboard .bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.biotime_dashboard .bg-secondary {
+    background-color: #6c757d !important;
+}
+
+.biotime_dashboard .bg-info {
+    background-color: #17a2b8 !important;
+}
+
+/* Opacity backgrounds */
+.biotime_dashboard .bg-success.bg-opacity-10 {
+    background-color: rgba(40, 167, 69, 0.1) !important;
+}
+
+.biotime_dashboard .bg-warning.bg-opacity-10 {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+}
+
+.biotime_dashboard .bg-danger.bg-opacity-10 {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Loading spinner */
+.biotime_dashboard .fa-spinner {
+    color: #007bff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .biotime_dashboard .display-4 {
+        font-size: 2rem;
+    }
+    
+    .biotime_dashboard .display-5 {
+        font-size: 1.5rem;
+    }
+    
+    .biotime_dashboard .card-body {
+        padding: 1rem;
+    }
+}

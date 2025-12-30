@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Biotime settings to Attendance settings page -->
+    <record id="res_config_settings_view_form_biotime" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.biotime</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[last()]" position="after">
+                <block title="Biotime Sync" name="biotime_sync_settings">
+                    <setting string="API Connection" help="Configure the Biotime server connection">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="biotime_api_url" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_api_url" placeholder="https://biotime.example.com"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_api_port" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_api_port"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_auth_method" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_auth_method"/>
+                            </div>
+                            <div class="row" invisible="biotime_auth_method != 'token'">
+                                <label for="biotime_api_token" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_api_token" password="True"/>
+                            </div>
+                            <div class="row" invisible="biotime_auth_method == 'token'">
+                                <label for="biotime_username" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_username"/>
+                            </div>
+                            <div class="row" invisible="biotime_auth_method == 'token'">
+                                <label for="biotime_password" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_password" password="True"/>
+                            </div>
+                        </div>
+                        <div class="mt8">
+                            <button name="action_biotime_test_connection" type="object"
+                                    string="Test Connection" class="btn-primary"/>
+                        </div>
+                    </setting>
+                    <setting string="Working Hours" help="Define standard working hours">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="biotime_work_start_time" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_work_start_time" widget="float_time"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_work_end_time" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_work_end_time" widget="float_time"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_break_duration" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_break_duration"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_late_tolerance" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_late_tolerance"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting string="Automatic Synchronization" help="Enable automatic attendance sync">
+                        <field name="biotime_auto_sync_enabled"/>
+                        <div class="content-group mt16" invisible="not biotime_auto_sync_enabled">
+                            <div class="row">
+                                <label for="biotime_sync_interval" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_sync_interval"/>
+                            </div>
+                            <div class="row">
+                                <label for="biotime_sync_days_back" class="col-lg-3 o_light_label"/>
+                                <field name="biotime_sync_days_back"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting string="Create Missing Employees" help="Automatically create employees in Odoo from Biotime">
+                        <field name="biotime_create_missing_employees"/>
+                        <div class="text-muted">
+                            When enabled, employees that exist in Biotime but not in Odoo will be automatically created during sync.
+                        </div>
+                    </setting>
+                    <setting string="Sync to HR Attendance" help="Sync biotime attendance to Odoo HR Attendance module">
+                        <field name="biotime_sync_to_hr_attendance"/>
+                        <div class="text-muted">
+                            When enabled, attendance records will be automatically synced to Odoo's native HR Attendance module.
+                        </div>
+                    </setting>
+                    <setting string="Manual Sync" help="Trigger sync manually">
+                        <div class="mt8">
+                            <button name="action_biotime_sync_employees" type="object"
+                                    string="Sync Employees" class="btn-secondary me-2"/>
+                            <button name="action_biotime_sync_attendance" type="object"
+                                    string="Sync Attendance" class="btn-secondary"/>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Biotime Attendance List View -->
+    <record id="view_biotime_attendance_tree" model="ir.ui.view">
+        <field name="name">biotime.attendance.list</field>
+        <field name="model">biotime.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendance Records">
+                <header>
+                    <button name="action_sync_to_hr" type="object" string="Sync to HR Attendance"/>
+                </header>
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <field name="worked_hours" widget="float_time"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'present'"
+                       decoration-warning="status in ('late', 'half_day')"
+                       decoration-danger="status in ('absent', 'incomplete')"/>
+                <field name="is_late"/>
+                <field name="synced_to_hr" string="Synced"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Biotime Attendance Form View -->
+    <record id="view_biotime_attendance_form" model="ir.ui.view">
+        <field name="name">biotime.attendance.form</field>
+        <field name="model">biotime.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Record">
+                <header>
+                    <button name="action_sync_to_hr" type="object" 
+                            string="Sync to HR Attendance" class="btn-primary"
+                            invisible="synced_to_hr"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Employee Information">
+                            <field name="employee_id"/>
+                            <field name="date"/>
+                            <field name="status" widget="badge"/>
+                        </group>
+                        <group string="Time Details">
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                            <field name="biotime_transaction_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Calculated Values">
+                            <field name="worked_hours" widget="float_time"/>
+                            <field name="overtime_hours" widget="float_time"/>
+                        </group>
+                        <group string="Late Status">
+                            <field name="is_late"/>
+                            <field name="late_minutes"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Odoo Integration">
+                            <field name="synced_to_hr"/>
+                            <field name="hr_attendance_id" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Biotime Attendance Search View -->
+    <record id="view_biotime_attendance_search" model="ir.ui.view">
+        <field name="name">biotime.attendance.search</field>
+        <field name="model">biotime.attendance</field>
+        <field name="arch" type="xml">
+            <search string="Search Attendance">
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="status"/>
+                <filter string="Present" name="present" domain="[('status', '=', 'present')]"/>
+                <filter string="Late" name="late" domain="[('status', '=', 'late')]"/>
+                <filter string="Incomplete" name="incomplete" domain="[('status', '=', 'incomplete')]"/>
+                <separator/>
+                <filter string="Not Synced" name="not_synced" domain="[('synced_to_hr', '=', False)]"/>
+                <filter string="Synced" name="synced" domain="[('synced_to_hr', '=', True)]"/>
+                <separator/>
+                <filter string="Employee" name="group_employee" context="{'group_by': 'employee_id'}"/>
+                <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Biotime Attendance Action -->
+    <record id="action_biotime_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">biotime.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_biotime_attendance_search"/>
+    </record>
+
+    <!-- Today's Attendance Action -->
+    <record id="action_biotime_attendance_today" model="ir.actions.act_window">
+        <field name="name">Today's Attendance</field>
+        <field name="res_model">biotime.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_biotime_attendance_search"/>
+    </record>
+    
+    <!-- Server Action to Sync All to HR Attendance -->
+    <record id="action_sync_all_to_hr" model="ir.actions.server">
+        <field name="name">Sync All to HR Attendance</field>
+        <field name="model_id" ref="model_biotime_attendance"/>
+        <field name="binding_model_id" ref="model_biotime_attendance"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+action = env['biotime.attendance'].sync_all_to_hr_attendance()
+        </field>
+    </record>
+</odoo>

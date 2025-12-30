@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biotime_attendance_user,biotime.attendance.user,model_biotime_attendance,group_biotime_user,1,0,0,0
+access_biotime_attendance_supervisor,biotime.attendance.supervisor,model_biotime_attendance,group_biotime_supervisor,1,1,0,0
+access_biotime_attendance_manager,biotime.attendance.manager,model_biotime_attendance,group_biotime_manager,1,1,1,1
+access_biotime_config_manager,biotime.config.manager,model_biotime_config,group_biotime_manager,1,1,1,1
+access_biotime_sync_log_user,biotime.sync.log.user,model_biotime_sync_log,group_biotime_user,1,0,0,0
+access_biotime_sync_log_manager,biotime.sync.log.manager,model_biotime_sync_log,group_biotime_manager,1,1,1,1
+access_biotime_sync_wizard_manager,biotime.sync.wizard.manager,model_biotime_sync_wizard,group_biotime_manager,1,1,1,1

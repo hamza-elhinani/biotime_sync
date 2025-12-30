@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Biotime User Group -->
+        <record id="group_biotime_user" model="res.groups">
+            <field name="name">Biotime / User</field>
+            <field name="comment">Can view own attendance records only</field>
+        </record>
+
+        <!-- Biotime Supervisor Group (implies User) -->
+        <record id="group_biotime_supervisor" model="res.groups">
+            <field name="name">Biotime / Supervisor</field>
+            <field name="implied_ids" eval="[(4, ref('group_biotime_user'))]"/>
+            <field name="comment">Can view and edit department attendance records</field>
+        </record>
+
+        <!-- Biotime Manager Group (implies Supervisor) -->
+        <record id="group_biotime_manager" model="res.groups">
+            <field name="name">Biotime / Manager</field>
+            <field name="implied_ids" eval="[(4, ref('group_biotime_supervisor'))]"/>
+            <field name="comment">Full access to all Biotime models and configuration</field>
+        </record>
+
+        <!-- Record Rules for Attendance -->
+        
+        <!-- User Rule: Can only see own attendance records -->
+        <record id="rule_biotime_attendance_user" model="ir.rule">
+            <field name="name">Biotime Attendance: User Own Records</field>
+            <field name="model_id" ref="model_biotime_attendance"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_biotime_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Supervisor Rule: Can see department attendance records -->
+        <record id="rule_biotime_attendance_supervisor" model="ir.rule">
+            <field name="name">Biotime Attendance: Supervisor Department Records</field>
+            <field name="model_id" ref="model_biotime_attendance"/>
+            <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>
+            <field name="groups" eval="[(4, ref('group_biotime_supervisor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Manager Rule: Can see all attendance records (no domain restriction) -->
+        <record id="rule_biotime_attendance_manager" model="ir.rule">
+            <field name="name">Biotime Attendance: Manager All Records</field>
+            <field name="model_id" ref="model_biotime_attendance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_biotime_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Biotime Configuration Form View -->
+    <record id="view_biotime_config_form" model="ir.ui.view">
+        <field name="name">biotime.config.form</field>
+        <field name="model">biotime.config</field>
+        <field name="arch" type="xml">
+            <form string="Biotime Configuration">
+                <header>
+                    <button name="test_connection" type="object" 
+                            string="Test Connection" class="btn-primary"
+                            icon="fa-plug"/>
+                    <button name="action_sync_employees" type="object" 
+                            string="Sync Employees" class="btn-secondary"
+                            icon="fa-users"/>
+                    <button name="action_sync_now" type="object" 
+                            string="Sync Attendance" class="btn-secondary"
+                            icon="fa-clock-o"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sync_logs" type="object"
+                                class="oe_stat_button" icon="fa-history">
+                            <span class="o_stat_text">Sync Logs</span>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" 
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Configuration Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="timezone"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- API Connection Tab -->
+                        <page string="API Connection" name="api_connection">
+                            <group>
+                                <group string="Server Settings">
+                                    <field name="api_url" placeholder="https://biotime.example.com"/>
+                                    <field name="api_port"/>
+                                    <field name="timeout"/>
+                                </group>
+                                <group string="Authentication">
+                                    <field name="auth_method"/>
+                                    <field name="api_token" password="True" 
+                                           invisible="auth_method != 'token'"
+                                           required="auth_method == 'token'"/>
+                                    <field name="username" 
+                                           invisible="auth_method == 'token'"
+                                           required="auth_method != 'token'"/>
+                                    <field name="password" password="True" 
+                                           invisible="auth_method == 'token'"
+                                           required="auth_method != 'token'"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <!-- Business Rules Tab -->
+                        <page string="Business Rules" name="business_rules">
+                            <group>
+                                <group string="Working Hours">
+                                    <field name="work_start_time" widget="float_time"/>
+                                    <field name="work_end_time" widget="float_time"/>
+                                    <field name="break_duration"/>
+                                </group>
+                                <group string="Attendance Rules">
+                                    <field name="late_tolerance"/>
+                                    <field name="overtime_threshold"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <!-- Sync Settings Tab -->
+                        <page string="Synchronization" name="sync_settings">
+                            <group>
+                                <group string="Auto Sync Settings">
+                                    <field name="auto_sync_enabled"/>
+                                    <field name="sync_interval" 
+                                           invisible="not auto_sync_enabled"/>
+                                    <field name="sync_days_back"/>
+                                    <field name="create_missing_employees"/>
+                                    <field name="sync_to_hr_attendance"/>
+                                </group>
+                                <group string="Last Sync Information">
+                                    <field name="last_sync_date"/>
+                                    <field name="last_sync_status" widget="badge"
+                                           decoration-success="last_sync_status == 'success'"
+                                           decoration-danger="last_sync_status == 'error'"
+                                           decoration-warning="last_sync_status == 'partial'"/>
+                                    <field name="last_sync_message"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Biotime Configuration List View -->
+    <record id="view_biotime_config_tree" model="ir.ui.view">
+        <field name="name">biotime.config.list</field>
+        <field name="model">biotime.config</field>
+        <field name="arch" type="xml">
+            <list string="Biotime Configurations">
+                <field name="name"/>
+                <field name="api_url"/>
+                <field name="auth_method"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Biotime Configuration Search View -->
+    <record id="view_biotime_config_search" model="ir.ui.view">
+        <field name="name">biotime.config.search</field>
+        <field name="model">biotime.config</field>
+        <field name="arch" type="xml">
+            <search string="Search Configurations">
+                <field name="name"/>
+                <field name="api_url"/>
+                <filter name="filter_active" string="Active" 
+                        domain="[('active', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" 
+                        domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Biotime Configuration Action -->
+    <record id="action_biotime_config" model="ir.actions.act_window">
+        <field name="name">Biotime Settings</field>
+        <field name="res_model">biotime.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure your Biotime connection
+            </p>
+            <p>
+                Set up the API connection to your ZKTeco Biotime server,
+                configure business rules for attendance tracking,
+                and manage synchronization settings.
+            </p>
+        </field>
+    </record>
+</odoo>

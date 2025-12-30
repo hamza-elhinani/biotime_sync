@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sync Wizard Form View -->
+    <record id="biotime_sync_wizard_form_view" model="ir.ui.view">
+        <field name="name">biotime.sync.wizard.form</field>
+        <field name="model">biotime.sync.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Biotime Sync">
+                <group>
+                    <field name="sync_type" widget="radio"/>
+                </group>
+                <group invisible="sync_type == 'employees'">
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_sync" string="Sync" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sync Wizard Action -->
+    <record id="biotime_sync_wizard_action" model="ir.actions.act_window">
+        <field name="name">Sync Now</field>
+        <field name="res_model">biotime.sync.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

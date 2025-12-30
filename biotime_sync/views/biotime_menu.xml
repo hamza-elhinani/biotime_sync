@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Biotime Menu -->
+    <menuitem id="menu_biotime_root"
+              name="Biotime"
+              web_icon="biotime_sync,static/description/icon.png"
+              sequence="50"/>
+
+    <!-- Attendance Submenu -->
+    <menuitem id="menu_biotime_attendance"
+              name="Attendance"
+              parent="menu_biotime_root"
+              sequence="10"/>
+
+    <!-- Today's Attendance Menu Item -->
+    <menuitem id="menu_biotime_attendance_today"
+              name="Today's Attendance"
+              parent="menu_biotime_attendance"
+              action="action_biotime_attendance_today"
+              sequence="10"/>
+
+    <!-- All Attendance Menu Item -->
+    <menuitem id="menu_biotime_attendance_all"
+              name="All Attendance"
+              parent="menu_biotime_attendance"
+              action="action_biotime_attendance"
+              sequence="20"/>
+
+    <!-- Dashboard Submenu -->
+    <menuitem id="menu_biotime_dashboard"
+              name="Dashboard"
+              parent="menu_biotime_root"
+              action="action_biotime_dashboard"
+              sequence="5"/>
+
+    <!-- Synchronization Submenu -->
+    <menuitem id="menu_biotime_sync"
+              name="Synchronization"
+              parent="menu_biotime_root"
+              sequence="30"/>
+
+    <!-- Sync Wizard Menu Item -->
+    <menuitem id="menu_biotime_sync_wizard"
+              name="Sync Now"
+              parent="menu_biotime_sync"
+              action="biotime_sync.biotime_sync_wizard_action"
+              sequence="10"/>
+
+    <!-- Sync Logs Menu Item -->
+    <menuitem id="menu_biotime_sync_logs"
+              name="Sync Logs"
+              parent="menu_biotime_sync"
+              action="action_biotime_sync_log"
+              sequence="20"/>
+
+    <!-- Configuration Submenu -->
+    <menuitem id="menu_biotime_config"
+              name="Configuration"
+              parent="menu_biotime_root"
+              groups="biotime_sync.group_biotime_manager"
+              sequence="100"/>
+
+    <!-- Settings Menu Item -->
+    <menuitem id="menu_biotime_settings"
+              name="Settings"
+              parent="menu_biotime_config"
+              action="action_biotime_config"
+              sequence="10"/>
+</odoo>
