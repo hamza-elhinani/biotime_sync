@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Biotime Sync',
+    'name': 'odoo ZKTeco Biotime Sync',
     'version': '19.0.1.0.0',
     'category': 'Human Resources/Attendance',
     'summary': 'Synchronize attendance data from Biotime (ZKTeco) biometric systems',
@@ -48,7 +48,7 @@ Features:
         ],
     },
     'images': ['static/description/icon.png'],
-    'price': 649,
+    'price': 449,
     'currency': 'EUR',
     'installable': True,
     'application': True,
