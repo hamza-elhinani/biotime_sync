@@ -17,7 +17,7 @@ Features:
 - Worked hours calculation with break deduction
 - Late detection and overtime calculation
 - Dashboard with attendance statistics
-- Role-based access control
+- Role-based access control 
     """,
     'author': 'Hunter BI',
     'company': 'Hunter BI',
